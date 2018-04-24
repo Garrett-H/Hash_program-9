@@ -21,7 +21,27 @@ int heap<T>::size() {
 
 template <typename T>
 void heap<T>::insert(T value) {
+  if(buffer.size() == 0)
+    buffer[1] = value;
+  //add element to the end of the heap
+  buffer.push_back(value);
   
+  int childLocation  = buffer.size();
+  int parentLocation = childLocation/2;
+  //if the parent is 1 
+  if(parentLocation == 0)
+    parentLocation++;
+  //if parent is less than: Swap
+  while(buffer[parentLocation] < buffer[childLocation]) {
+    T temp = buffer[parentLocation];
+    buffer[parentLocation] = buffer[childLocation];
+    buffer[childLocation] = temp;
+    //changing for swap
+    childLocation = parentLocation;
+    parentLocation /= 2;
+    if(parentLocation == 0)
+      parentLocation++;
+  }
 }
 
 template <typename T>
