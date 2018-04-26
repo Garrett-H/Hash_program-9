@@ -1,7 +1,7 @@
 /* Author: Garrett Hay
  * Date  : 4/16/18
  * File  : heap.h
- * Description:  
+ * Description:
  */
 
 #ifndef HEAP_H
@@ -23,6 +23,7 @@ class heap
   void print();
  private:
   std::vector<T> buffer;
+  T root;
 };
-  
+
 #endif // HEAP_H

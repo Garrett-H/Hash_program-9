@@ -5,13 +5,14 @@
  */
 
 #include <iostream>
-#incldue <vector>
+#include <vector>
+#include "heap.h"
 
 using namespace std;
 
 template <typename T>
 heap<T>::heap() {
-  root = buffer[1];
+  //root = buffer[1];
 }
 
 template <typename T>
@@ -25,10 +26,10 @@ void heap<T>::insert(T value) {
     buffer[1] = value;
   //add element to the end of the heap
   buffer.push_back(value);
-  
+
   int childLocation  = buffer.size();
   int parentLocation = childLocation/2;
-  //if the parent is 1 
+  //if the parent is 1
   if(parentLocation == 0)
     parentLocation++;
   //if parent is less than: Swap
@@ -50,7 +51,7 @@ void heap<T>::remove_max() {
   buffer[i]=buffer.back();
   buffer.erase(buffer.end());
   //loops until buffer is semi-sorted again
-  removeHelper(i, i*2+1, i*2);
+  removeHelper(i, (i*2+1), (i*2));
 }
 
 template <typename T>
@@ -61,7 +62,7 @@ void heap<T>::removeHelper(int curr, int left, int right) {
     T temp;
     //false=left or true=right child is changed
     bool goRight;
-    
+
     //if left is bigger
     if(buffer[left] > buffer[right]) {
       temp = buffer[i];
