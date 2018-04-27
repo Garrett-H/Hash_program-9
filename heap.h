@@ -23,6 +23,7 @@ class heap
   void print();
  private:
   std::vector<T> buffer;
+  void removeHelper(int curr, int left, int right);
   T root;
 };
 

@@ -51,7 +51,7 @@ void heap<T>::remove_max() {
   buffer[i]=buffer.back();
   buffer.erase(buffer.end());
   //loops until buffer is semi-sorted again
-  removeHelper(i, (i*2+1), (i*2));
+  this->removeHelper(i, (i*2+1), (i*2));
 }
 
 template <typename T>
@@ -65,15 +65,15 @@ void heap<T>::removeHelper(int curr, int left, int right) {
 
     //if left is bigger
     if(buffer[left] > buffer[right]) {
-      temp = buffer[i];
-      buffer[i] = buffer[left];
+      temp = buffer[curr];
+      buffer[curr] = buffer[left];
       buffer[left] = temp;
       goRight = false;
     }
     //if right is bigger || if right is equal to left
     else {
-      temp = buffer[i];
-      buffer[i] = buffer[right];
+      temp = buffer[curr];
+      buffer[curr] = buffer[right];
       buffer[right] = temp;
       goRight = true;
     }
@@ -83,13 +83,13 @@ void heap<T>::removeHelper(int curr, int left, int right) {
       curr = right;
       left = right*2;
       right = left+1;
-      removeHelper(curr, left, right);
+     this->removeHelper(curr, left, right);
     }
     else {
       curr = left;
       right = right*2+1;
       left = right-1;
-      removeHelper(curr, left, right);
+      this->removeHelper(curr, left, right);
     }
   }
   //if current is bigger than either leave it
@@ -102,6 +102,6 @@ T heap<T>::max() {
 
 template <typename T>
 void heap<T>::print() {
-  for(vector<T>::const_iterator it= buffer.begin(); it != buffer.end(); ++it)
-    cout << *it << endl;
+  for(int i=1; i != buffer.end(); i++)
+    cout << buffer[i] << endl;
 }
