@@ -15,8 +15,8 @@ $(TARGET): main.o heap.o
 main.o: main.cpp heap.h
 	$(CC) $(CFLAGS) main.cpp
 
-heap.o: heap.cpp heap.h
-	$(CC) $(CFLAGS) heap.cpp
+heap.o: heap.h
+	
 
 clean:
 	rm *.o $(TARGET)
