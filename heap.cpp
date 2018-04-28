@@ -10,56 +10,49 @@
 
 using namespace std;
 
-template <typename T>
-heap<T>::heap() {
-  //root = buffer[1];
+heap::heap() {
 }
 
-template <typename T>
-int heap<T>::size() {
+heap::~heap() {
+  
+}
+
+int heap::size() {
   return buffer.size();
 }
 
-template <typename T>
-void heap<T>::insert(T value) {
-  if(buffer.size() == 0)
-    buffer[1] = value;
-  //add element to the end of the heap
-  buffer.push_back(value);
-
-  int childLocation  = buffer.size();
-  int parentLocation = childLocation/2;
-  //if the parent is 1
-  if(parentLocation == 0)
-    parentLocation++;
-  //if parent is less than: Swap
-  while(buffer[parentLocation] < buffer[childLocation]) {
-    T temp = buffer[parentLocation];
-    buffer[parentLocation] = buffer[childLocation];
-    buffer[childLocation] = temp;
-    //changing for swap
-    childLocation = parentLocation;
-    parentLocation /= 2;
-    if(parentLocation == 0)
-      parentLocation++;
-  }
+void heap::insert(int value) {
+    //add element to the end of the heap
+    buffer.push_back(value);
+    
+    int childLocation  = buffer.size()-1;
+    int parentLocation = (childLocation-1)/2;
+    //if the child is not the root
+    if(childLocation != 0) {
+      //if parent is less than: Swap
+      while(buffer[parentLocation] < buffer[childLocation]) {
+	//swap parent and child
+	int temp = buffer[parentLocation];
+	buffer[parentLocation] = buffer[childLocation];
+	buffer[childLocation] = temp;
+	//changing for swap
+	childLocation = parentLocation;
+	parentLocation = parentLocation/2;
+      }
+    }
+    
 }
 
-template <typename T>
-void heap<T>::remove_max() {
-  int i=1;
-  buffer[i]=buffer.back();
-  buffer.erase(buffer.end());
+void heap::remove_max() {
+  int curr=1;
+  buffer[curr]=buffer.back();
+  buffer.pop_back();
+
+  int left  = curr*2+1;
+  int right = left+1;
   //loops until buffer is semi-sorted again
-  this->removeHelper(i, (i*2+1), (i*2));
-}
-
-template <typename T>
-void heap<T>::removeHelper(int curr, int left, int right) {
-  //if the current is less than either of it's children
-  if(buffer[curr] < buffer[left] || buffer[curr] < buffer[right]) {
-    //used for temp holding
-    T temp;
+  while(buffer[curr] < buffer[left] || buffer[curr] < buffer[right]) {
+    int temp;
     //false=left or true=right child is changed
     bool goRight;
 
@@ -77,31 +70,32 @@ void heap<T>::removeHelper(int curr, int left, int right) {
       buffer[right] = temp;
       goRight = true;
     }
-
     //afterword move on to the new location
     if(goRight) {
       curr = right;
-      left = right*2;
+      left = right*2+1;
       right = left+1;
-     this->removeHelper(curr, left, right);
     }
     else {
       curr = left;
-      right = right*2+1;
-      left = right-1;
-      this->removeHelper(curr, left, right);
+      left = right*2+1;
+      right = left+1;
     }
   }
   //if current is bigger than either leave it
 }
 
-template <typename T>
-T heap<T>::max() {
-  return buffer[1];
+int heap::max() {
+  return buffer[0];
 }
 
-template <typename T>
-void heap<T>::print() {
-  for(int i=1; i != buffer.end(); i++)
-    cout << buffer[i] << endl;
+void heap::print() {
+  int end = buffer.size();
+  for(int i=0; i <= end; i++) {
+    if(i == 1)
+      cout << endl;
+    else if(i == 3)
+      cout << endl;
+    cout << buffer[i] << ' ';
+  }
 }

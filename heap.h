@@ -10,21 +10,19 @@
 #include <iostream>
 #include <vector>
 
-template <typename T>
 class heap
 {
  public:
   heap();
   ~heap();
   int size();
-  void insert(T value);
+  void insert(int value);
   void remove_max();
-  T max();
+  int max();
   void print();
  private:
-  std::vector<T> buffer;
+  std::vector<int> buffer;
   void removeHelper(int curr, int left, int right);
-  T root;
 };
 
 #endif // HEAP_H
